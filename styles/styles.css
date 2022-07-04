@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom general CSS */
+
+.line-clamp{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Custom scrollbar for index page */
+.category::-webkit-scrollbar {
+    width: 5em;
+    height: 10px;
+}
+
+.category::-webkit-scrollbar:horizontal {
+    height: 8px;
+}
+
+.category::-webkit-scrollbar-track:horizontal {
+    background: #eee;
+    margin-left: 160px;
+    margin-right: 160px;
+}
+
+.category::-webkit-scrollbar-thumb:horizontal {
+    width: 5px;
+    background: #005c5b;
+}
+
+/*show this code below for ipad and desktop screen size*/
+/* .category::-webkit-scrollbar {
+    display: none;
+} */
+
+.swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction{
+    bottom: 5px !important;
+}
