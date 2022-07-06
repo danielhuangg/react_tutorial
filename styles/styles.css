@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 /* Custom general CSS */
+body{
+    background: rgb(249 250 251);
+}
 
 .line-clamp{
     display: -webkit-box;
@@ -40,4 +43,11 @@
 
 .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction{
     bottom: 5px !important;
+}
+
+@media(min-width: 550px){
+    .category::-webkit-scrollbar-track:horizontal {
+        margin-left: 200px;
+        margin-right: 200px;
+    }
 }

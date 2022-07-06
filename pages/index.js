@@ -13,10 +13,6 @@ export function Index({product, category, topbanner, testimonies}) {
   let [registerModal, registerIsOpen] = useState(false);
   
 
-  function closeModal() {
-    loginIsOpen(false)
-    registerIsOpen(false)
-  }
 
   function openLogin() {
     registerIsOpen(false)
@@ -26,6 +22,12 @@ export function Index({product, category, topbanner, testimonies}) {
   function openRegister() {
     loginIsOpen(false)
     registerIsOpen(true)
+    console.log('masuk sini', registerModal)
+  }
+  
+  function closeModal() {
+    loginIsOpen(false)
+    registerIsOpen(false)
   }
 
   function classNames(...classes) {
@@ -36,6 +38,19 @@ export function Index({product, category, topbanner, testimonies}) {
     'Become Reseller': [],
     'Become Member': []
   })
+
+  
+  const [loginSwipe, loginIsSelected] = useState(false);
+  const [registerSwipe, registerIsSelected] = useState(false);
+  // function selectLogin(){
+  //   registerIsSelected(false)
+  //   loginIsSelected(true)
+  // }
+
+  // function selectRegister(){
+  //   loginIsSelected(false)
+  //   registerIsSelected(true)
+  // }
 
   const [productModule, productIsActive] = useState(false);
   const [profileModule, profileIsActive] = useState(false);
@@ -59,26 +74,26 @@ export function Index({product, category, topbanner, testimonies}) {
   }
   
   
-  function openProduct() {
-    profileIsActive(false)
-    productIsActive(true)
-  }
+  // function openProduct() {
+  //   profileIsActive(false)
+  //   productIsActive(true)
+  // }
 
-  function openProfile() {
-    productIsActive(false)
-    profileIsActive(true)
-  }
+  // function openProfile() {
+  //   productIsActive(false)
+  //   profileIsActive(true)
+  // }
   
-  function closeModule(){
-    profileIsActive(false)
-    productIsActive(false)
-    menuIsSelected(false)
-  }
+  // function closeModule(){
+  //   profileIsActive(false)
+  //   productIsActive(false)
+  //   menuIsSelected(false)
+  // }
 
-  function openMenu(category) {
-    setMenu(category);
+  // function openMenu(category) {
+  //   setMenu(category);
     
-  }
+  // }
 
 
   return (
@@ -90,7 +105,7 @@ export function Index({product, category, topbanner, testimonies}) {
       </Head>
       {/* Dropdown to select outlet */}
       <div className="z-40 fixed w-full h-14 top-0 left-0 bg-teal-900 text-white pl-4">
-        <div className="container h-14 max-w-none md:max-w-lg mx-auto relative flex items-center">
+        <div className="container h-14 mx-auto relative flex items-center lg:w-[1170px]">
           <Menu as="div" className="relative inline-block text-left">
             <div>
               <Menu.Button className="inline-flex w-full justify-center text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 md:rounded-md md:bg-black md:bg-opacity-20 md:px-4 md:py-2">
@@ -149,10 +164,10 @@ export function Index({product, category, topbanner, testimonies}) {
               </Menu.Items>
             </Transition>
           </Menu>
-          <div className="absolute w-14 h-14 top-0 right-10 flex items-center justify-center" onClick={openLogin}>
+          <div className="absolute w-14 h-14 top-0 right-10 flex items-center justify-center cursor-pointer" onClick={openLogin}>
             <IconUser/>
           </div>
-          <div className="absolute w-12 h-14 top-0 right-0 flex items-center justify-center">
+          <div className="absolute w-12 h-14 top-0 right-0 flex items-center justify-center cursor-pointer" onClick= {openRegister}>
             <IconShoppingCart/>
           </div>
         </div>
@@ -188,7 +203,7 @@ export function Index({product, category, topbanner, testimonies}) {
                   <Dialog.Title as="h3" className="text-xl font-medium leading-6 text-teal-900">
                     Login
                     <span className="float-right">
-                      <IconX className="text-gray-500" onClick={closeModal}></IconX>
+                      <IconX className="text-gray-500 cursor-pointer" onClick={closeModal}></IconX>
                     </span>
                   </Dialog.Title>
                   <div className="">
@@ -236,7 +251,7 @@ export function Index({product, category, topbanner, testimonies}) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          <div className="fixed inset-0 bg-black bg-opacity-25" />
           </Transition.Child>
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
@@ -253,7 +268,7 @@ export function Index({product, category, topbanner, testimonies}) {
                 <Dialog.Title as="h3" className="text-xl font-medium leading-6 text-teal-900">
                     Register
                     <span className="float-right">
-                      <IconX className="text-gray-500" onClick={closeModal}></IconX>
+                      <IconX className="text-gray-500 cursor-pointer" onClick={closeModal}></IconX>
                     </span>
                 </Dialog.Title>
                 <Tab.Group>
@@ -277,6 +292,16 @@ export function Index({product, category, topbanner, testimonies}) {
                   </Tab.List>
                   <Tab.Panels>
                     <Tab.Panel>
+                      <Transition.Child
+                        show= { loginSwipe }
+                        enter="transition ease-in-out duration-200 transform"
+                        enterFrom="translate-x-full"
+                        enterTo="translate-x-0"
+                        leave="transition ease-in-out duration-100 transform"
+                        leaveFrom="translate-x-0"
+                        leaveTo="translate-x-full"
+                        className=""
+                        >
                       <div className="mt-4 text-lg leading-6 font-bold">
                         Annona Business Owner
                       </div>
@@ -349,8 +374,19 @@ export function Index({product, category, topbanner, testimonies}) {
                             Already have account? <span className="text-orange-700 font-medium cursor-pointer ease-in-out duration-200 hover:text-orange-500 hover:underline underline-offset-2" onClick= {openLogin}>Login Here</span>
                         </div>
                       </div>
+                      </Transition.Child>
                     </Tab.Panel>
-                    <Tab.Panel>   
+                    <Tab.Panel onClick={registerIsSelected}>
+                      <Transition.Child
+                        show= { registerSwipe }
+                        enter="transition ease-in-out duration-200 transform"
+                        enterFrom="translate-x-full"
+                        enterTo="translate-x-0"
+                        leave="transition ease-in-out duration-100 transform"
+                        leaveFrom="translate-x-0"
+                        leaveTo="translate-x-full"
+                        className=""
+                        >   
                       <div className="mt-4 text-lg leading-6 font-bold">
                           Annona Privileged Customer Programme
                         </div>
@@ -423,6 +459,7 @@ export function Index({product, category, topbanner, testimonies}) {
                             Already have account? <span className="text-orange-700 font-medium cursor-pointer ease-in-out duration-200 hover:text-orange-500 hover:underline underline-offset-2" onClick= {openLogin}>Login Here</span>
                         </div>
                       </div>
+                      </Transition.Child>
                     </Tab.Panel>
                   </Tab.Panels>
                 </Tab.Group>
@@ -432,88 +469,105 @@ export function Index({product, category, topbanner, testimonies}) {
           </div>
         </Dialog>
       </Transition>
-      
-      <div className="container bg-gray-50 max-w-none md:max-w-lg mx-auto pt-14 pb-20">
-        <Swiper
-            modules={[Pagination]}
-            spaceBetween={50}
-            slidesPerView={1}
-            pagination={true}
-          >  
-            { topbanner.map((slider) => 
-              <SwiperSlide key= { slider.id }><img src={ slider.image }></img></SwiperSlide>
-            )}
-        </Swiper>
-        <div className="px-4">
-            <CategoryList categories= { category }/>
-            <ProductList products= { product }/>
 
-            {/* About Us */}
-            <div className="mt-8 mb-2 font-bold text-teal-900">
-                About Annona
+      {/* Content Body */}
+      <div className="relative container mx-auto lg:w-[1170px]">
+        {/* <div className="absolute top-0 left-0 w-[200px] h-full hidden pt-14">
+            <div className="sticky top-16">
+              asd
             </div>
-            <p className="leading-6">
-              ANNONA highlights research - based beauty and health solutions to meet the needs of consumers. Founded under MOS Nutraceutical Sdn. Bhd. by Puan Ony Nurhusni and Encik Syahril Izwan, ANNONA is dedicated and committed to expand health and beauty awareness to the community through various products under ANNONA brand.
-            </p>
-            <img src="/img/aboutus.jpg" className="w-full mt-4"></img>
-            
-            {/* Testimony */}
-            <div className="mt-8 mb-2 font-bold text-teal-900">
-                Testimony
-            </div>
-            <Swiper className="mt-4"
+        </div> */}
+        <div className="container max-w-none mx-auto pt-14">
+        <Swiper
               modules={[Pagination]}
               spaceBetween={50}
               slidesPerView={1}
               pagination={true}
+              className="cursor-pointer"
             >  
-              { testimonies.map((testimony) => 
-                <SwiperSlide key= { testimony.id }><img src={ testimony.image }></img></SwiperSlide>
+              { topbanner.map((slider) => 
+                <SwiperSlide key= { slider.id }><img src={ slider.image }></img></SwiperSlide>
               )}
-            </Swiper>
+          </Swiper>
+          <div className="px-4 flex items-center justify-center">        
+            <CategoryList categories= { category }/>
+          </div>
+        </div>
+        <div className="container bg-gray-50 max-w-none mx-auto pt-14 pb-20">
+          <div className="px-4">
+              <ProductList products= { product }/>
 
-            {/* Testimony */}
-            <div className="mt-8 font-bold text-teal-900">
-                Follow Us
-            </div>
-            <div className="mt-2 flex">
-                <a href="" target="_blank" className="mr-2 text-gray-600 ease-in-out duration-200 hover:text-teal-900"><IconBrandFacebook></IconBrandFacebook></a>
-                <a href="" target="_blank" className="mr-2 text-gray-600 ease-in-out duration-200 hover:text-teal-900"><IconBrandInstagram></IconBrandInstagram></a>
-                <a href="" target="_blank" className="mr-2 text-gray-600 ease-in-out duration-200 hover:text-teal-900"><IconBrandTiktok></IconBrandTiktok></a>
-                <a href="" target="_blank" className="mr-2 text-gray-600 ease-in-out duration-200 hover:text-teal-900"><IconBrandYoutube></IconBrandYoutube></a>
-            </div>
+              <div className="">
+                {/* About Us */}
+                <div className="mt-8">
+                    <div className="font-bold text-teal-900 mb-2">About Annona</div>
+                    <p className="leading-6">
+                      ANNONA highlights research - based beauty and health solutions to meet the needs of consumers. Founded under MOS Nutraceutical Sdn. Bhd. by Puan Ony Nurhusni and Encik Syahril Izwan, ANNONA is dedicated and committed to expand health and beauty awareness to the community through various products under ANNONA brand.
+                    </p>
+                    <img src="/img/aboutus.jpg" className="mt-7 lg:w-1/2"></img>
+                </div>
+                
+                {/* Testimony */}
+                <div className="mt-8">
+                    <div className="font-bold text-teal-900 mb-2">Testimony</div>
+                    <Swiper className="mt-4 cursor-pointer lg:w-1/2" style={{marginLeft: "0"}}
+                      modules={[Pagination]}
+                      spaceBetween={50}
+                      slidesPerView={1}
+                      pagination={true}
+                    >  
+                      { testimonies.map((testimony) => 
+                        <SwiperSlide key= { testimony.id }><img src={ testimony.image }></img></SwiperSlide>
+                      )}
+                    </Swiper>
+                </div>
+              </div>
 
-            {/* Legal */}
-            <div className="mt-8 font-bold text-teal-900">
-                Legal
-            </div>
-            <div className="mt-2">
-                <a href="" target="_blank" className="mr-2 text-gray-600 ease-in-out duration-200 hover:text-teal-900">Terms and Conditions</a>
-                <br></br>
-                <a href="" target="_blank" className="mr-2 text-gray-600 ease-in-out duration-200 hover:text-teal-900">Privacy Policy</a>
-                <br></br>
-                <a href="" target="_blank" className="mr-2 text-gray-600 ease-in-out duration-200 hover:text-teal-900">Copyright Information</a>
-            </div>
+              {/* Social Media */}
+              <div className="mt-8 font-bold text-teal-900">
+                  Follow Us
+              </div>
+              <div className="mt-2 flex">
+                  <a href="" target="_blank" className="mr-2 text-gray-600 ease-in-out duration-200 hover:text-teal-900"><IconBrandFacebook></IconBrandFacebook></a>
+                  <a href="" target="_blank" className="mr-2 text-gray-600 ease-in-out duration-200 hover:text-teal-900"><IconBrandInstagram></IconBrandInstagram></a>
+                  <a href="" target="_blank" className="mr-2 text-gray-600 ease-in-out duration-200 hover:text-teal-900"><IconBrandTiktok></IconBrandTiktok></a>
+                  <a href="" target="_blank" className="mr-2 text-gray-600 ease-in-out duration-200 hover:text-teal-900"><IconBrandYoutube></IconBrandYoutube></a>
+              </div>
+
+              {/* Legal */}
+              <div className="mt-8 font-bold text-teal-900">
+                  Legal
+              </div>
+              <div className="mt-2">
+                  <a href="" target="_blank" className="mr-2 text-gray-600 ease-in-out duration-200 hover:text-teal-900">Terms and Conditions</a>
+                  <br></br>
+                  <a href="" target="_blank" className="mr-2 text-gray-600 ease-in-out duration-200 hover:text-teal-900">Privacy Policy</a>
+                  <br></br>
+                  <a href="" target="_blank" className="mr-2 text-gray-600 ease-in-out duration-200 hover:text-teal-900">Copyright Information</a>
+              </div>
+          </div>
         </div>
       </div>
 
       {/* Bottom Menu */}
-      <div className="z-40 fixed w-full h-16 bottom-0 left-0 bg-white border-t grid grid-cols-4">
-        <div className={`h-16 flex flex-col items-center justify-center ease-in-out duration-200  ${selectedMenu === 'home' ? 'text-teal-900' : 'text-gray-400'}`} onClick={ () => setMenu('home') }>
-          <IconHome className=""/>
-          <span className="text-sm">Home</span>
-        </div>
-        <div className={`h-16 flex flex-col items-center justify-center ease-in-out duration-200 ${selectedMenu === 'product' ? 'text-teal-900' : 'text-gray-400'}`} onClick={ () => setMenu('product') }>
-          <IconPackage className=""/>
-          <span className="text-sm">Product</span>
-        </div>
-        <div className="h-16 flex flex-col items-center justify-center ease-in-out duration-200 text-gray-400">
-          <IconNotification className=""/>
-          <span className="text-sm">Announce</span>
-        </div>
-        <div className={`h-16 flex flex-col items-center justify-center ease-in-out duration-200 ${selectedMenu === 'profile' ? 'text-teal-900' : 'text-gray-400'}`} onClick={ () => setMenu('profile') }>
-          <IconUserCircle className=""/>
-          <span className="text-sm">Me</span>
+      <div className="z-40 fixed w-full h-16 bottom-0 left-0 bg-white border-t">
+        <div className="container h-14 mx-auto relative flex items-center grid grid-cols-4 lg:w-[1170px]">
+          <div className={`h-16 flex flex-col items-center justify-center ease-in-out duration-200 cursor-pointer hover:text-teal-700  ${selectedMenu === 'home' ? 'text-teal-900' : 'text-gray-400'}`} onClick={ () => setMenu('home') }>
+            <IconHome className=""/>
+            <span className="text-sm">Home</span>
+          </div>
+          <div className={`h-16 flex flex-col items-center justify-center ease-in-out duration-200 cursor-pointer hover:text-teal-700 ${selectedMenu === 'product' ? 'text-teal-900' : 'text-gray-400'}`} onClick={ () => setMenu('product') }>
+            <IconPackage className=""/>
+            <span className="text-sm">Product</span>
+          </div>
+          <div className="h-16 flex flex-col items-center justify-center ease-in-out duration-200 cursor-pointer hover:text-teal-700 text-gray-400">
+            <IconNotification className=""/>
+            <span className="text-sm">Announce</span>
+          </div>
+          <div className={`h-16 flex flex-col items-center justify-center ease-in-out duration-200 cursor-pointer hover:text-teal-700 ${selectedMenu === 'profile' ? 'text-teal-900' : 'text-gray-400'}`} onClick={ () => setMenu('profile') }>
+            <IconUserCircle className=""/>
+            <span className="text-sm">Me</span>
+          </div>
         </div>
       </div>
       
@@ -521,7 +575,7 @@ export function Index({product, category, topbanner, testimonies}) {
       {/* Product Module */}
       <Transition
         show={ productModule }
-        enter="transition ease-in-out duration-200 transform"
+        enter="transition ease-in-out duration-200 transform lg:transition-none"
         enterFrom="translate-x-full"
         enterTo="translate-x-0"
         leave="transition ease-in-out duration-100 transform"
@@ -529,15 +583,15 @@ export function Index({product, category, topbanner, testimonies}) {
         leaveTo="translate-x-full"
         className="fixed w-full h-full top-0 translate-x-full bg-gray-50 z-30 pt-14"
       >
-        <div>
-          Product module
+        <div className="relative container mx-auto lg:w-[1170px]">
+            Product Module here
         </div>
       </Transition>
 
       {/* Profile Module */}
       <Transition
         show={ profileModule }
-        enter="transition ease-in-out duration-200 transform"
+        enter="transition ease-in-out duration-200 transform lg:transition-none"
         enterFrom="translate-x-full"
         enterTo="translate-x-0"
         leave="transition ease-in-out duration-100 transform"
@@ -545,7 +599,7 @@ export function Index({product, category, topbanner, testimonies}) {
         leaveTo="translate-x-full"
         className="fixed w-full h-full top-0 translate-x-full bg-gray-50 z-30 pt-14"
       >
-        <div>
+        <div className="relative container mx-auto lg:w-[1170px]">
           profile Module
         </div>
       </Transition>

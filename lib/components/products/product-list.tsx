@@ -16,7 +16,7 @@ export function ProductList({ products }: ProductProps) {
                 View All <IconArrowNarrowRight className="inline-block relative top-[-1px]"/>
             </div>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             { products.map((product) => 
                 <div key={ product.id } className="shadow shadow-gray-200 border rounded border-gray-200 bg-white">
                     <div className="h-44 bg-contain bg-no-repeat bg-center" style={{backgroundImage: `url(${product.image})`}}>
